@@ -165,8 +165,39 @@ if ($LSAAdditional) {
     }
     if ($Force) {
         if ($LSAAdditionalPossibleForce -eq $true) {
-            Write-Host "[LSAAdditional]: Creating/Setting RunAsPPL registry value to 1 " -ForegroundColor Green
+            Write-Host "[LSAAdditional]: Creating/Setting RunAsPPL registry value to 1" -ForegroundColor Green
             New-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\LSA" -Name "RunAsPPL" -Value 1 -PropertyType DWORD -Force
         }
+    }
+}
+
+if ($LSAAudit) {
+    $LSAAuditExist = Test-RegistryValue -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\LSASS.exe" -Value "AuditLevel"
+    if ($LSAAuditExist -eq $false) {
+        Write-Host "[LSAAudit Vulnerable]: AuditLevel registry value not found" -ForegroundColor Red
+        $LSAAuditPossibleForce = $true
+    }
+    elseif ($LSAAuditExist -eq $true) {
+        $LSAAuditValue = Get-ItemProperty -Path "HKLM:\HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\LSASS.exe" -Name "AuditLevel"
+        if ($LSAAuditValue -eq 8) {
+            Write-Host "[LSAAudit Secure]: AuditLevel registry value set to 8" -ForegroundColor Green
+        }
+        else {
+            Write-Host "[LSAAudit Vulnerable]: AuditLevel registry value set to $LSAAuditValue" -ForegroundColor Red
+            $LSAAuditPossibleForce = $true
+        }
+    }
+    if ($Force) {
+        if ($LSAAuditPossibleForce -eq $true) {
+            Write-Host "[LSAAudit]: Creating/Setting AuditLevel registry value to 8" -ForegroundColor Green
+            New-ItemProperty -Path "HKLM:\HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\LSASS.exe" -Name "AuditLevel" -Value 8 -PropertyType DWORD -Force
+        }
+    }
+}
+
+if ($RestrictedAdmin) {
+    $RestrictedAdminExist = Test-RegistryValue -Path "HKLM:\System\CurrentControlSet\Control\Lsa" -Value "DisableRestrictedAdmin"
+    if ($RestrictedAdminExist -eq $false) {
+        
     }
 }
