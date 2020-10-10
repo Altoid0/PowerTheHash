@@ -85,7 +85,7 @@ if ($args.Count -eq 0) {
 
 # Switch for each param
 if ($Force) {
-    Write-Host "[Force]: PowerTheHash will automatically mitigate threats" -ForegroundColor Green
+    Write-Host "[Force]: PowerTheHash will automatically mitigate threats `n" -ForegroundColor Green
 }
 
 # Print summary of mitigations/checks to run
