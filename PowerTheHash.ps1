@@ -78,12 +78,12 @@ function Test-RegistryValue {
 
 # Check for script arguments
 if ($args.Count -eq 0) {
-    # Write error message to consoel and exit
+    # Write error message to console and exit
     Write-Error -Message "[Error]: No arguments specified" -Category InvalidArgument
     exit
 }
 
-# Switch for Forec param
+# Switch for each param
 if ($Force) {
     Write-Host "[Force]: PowerTheHash will automatically mitigate threats" -ForegroundColor Green
 }
@@ -104,7 +104,7 @@ if ($RestrictedAdmin) {
     Write-Host "[RestrictedAdmin]: Disable storage of reusable administrative credentials on memory" -ForegroundColor Green
 }
 if ($Cachelogons) {
-    Write-Host "[CacheLogons]: Dsiable caching of windows credentials" -ForegroundColor Green
+    Write-Host "[CacheLogons]: Disable caching of windows credentials" -ForegroundColor Green
 }
 if ($TokenFilterPolicy) {
     Write-Host "[TokenFilteringPolicy]: Enable remote UAC for local administrators" -ForegroundColor Green
