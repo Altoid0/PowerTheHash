@@ -142,3 +142,31 @@ if ($WDigest) {
         }
     }
 }
+
+if ($LSAAdditional) {
+    $LSAAdditionalExist = Test-RegistryValue -Path "HKLM:\System\CurrentControlSet\Control\LSA" -Value "RunAsPPL"
+    if ($LSAAdditionalExist -eq $false) {
+        Write-Host "[LSAAdditional Vulnerable]: RunAsPPL registry value not found" -ForegroundColor Red
+        $LSAAdditionalPossibleForce = $true
+    }
+    elseif ($LSAAdditionalExist -eq $true) {
+        $LSAAdditionalValue = Get-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\LSA" -Name "RunAsPPL"
+        if ($LSAAdditionalValue -eq 0) {
+            Write-Host "[LSAAdditional Vulnerable]: RunAsPPL registry value set to 0" -ForegroundColor Red
+            $LSAAdditionalPossibleForce = $true
+        }
+        elseif ($LSAAdditionalValue -eq 1) {
+            Write-Host "[LSAAdditional Secure]: RunAsPPL registry value set to 1" -ForegroundColor Green
+        }
+        else {
+            Write-Host "[LSAAdditional Error]: RunAsPPL registry value set to obscure value of $LSAAdditionalValue" -ForegroundColor Yellow
+            $LSAAdditionalPossibleForce = $true
+        }
+    }
+    if ($Force) {
+        if ($LSAAdditionalPossibleForce -eq $true) {
+            Write-Host "[LSAAdditional]: Creating/Setting RunAsPPL registry value to 1 " -ForegroundColor Green
+            New-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\LSA" -Name "RunAsPPL" -Value 1 -PropertyType DWORD -Force
+        }
+    }
+}
