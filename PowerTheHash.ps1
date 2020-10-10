@@ -7,25 +7,25 @@
     mitigation tool for high security Windows environments
 
     .PARAMETER WDigest
-    Specifies the file name.
+    https://blog.stealthbits.com/wdigest-clear-text-passwords-stealing-more-than-a-hash/
 
     .PARAMETER LSAAdditional
-    Specifies the extension. "Txt" is the default.
+    https://docs.microsoft.com/en-us/windows-server/security/credentials-protection-and-management/configuring-additional-lsa-protection
 
     .PARAMETER LSAAudit
-    Specifies the extension. "Txt" is the default.
+    https://docs.microsoft.com/en-us/windows-server/security/credentials-protection-and-management/configuring-additional-lsa-protection
 
     .PARAMETER RestrictedAdmin
-    Specifies the file name.
-
-    .PARAMETER RestrictedAdminOutboundCreds
-    Specifies the file name.
+    https://www.stigviewer.com/stig/windows_paw/2017-11-21/finding/V-78161
+    https://www.eshlomo.us/restricted-rdp-for-admin-restrictedadmin/
+    https://isc.sans.edu/forums/diary/Mitigations+against+Mimikatz+Style+Attacks/24612/
 
     .PARAMETER Cachelogons
-    Specifies the file name.
+    Change Local Security policy to prevent the cahcing of user account credentials
 
     .PARAMETER TokenFilterPolicy
-    Specifies the file name.
+    https://docs.microsoft.com/en-us/troubleshoot/windows-server/windows-security/user-account-control-and-remote-restriction
+    https://www.stigviewer.com/stig/windows_server_2008_r2_member_server/2014-04-02/finding/V-36439
 
     .EXAMPLE
     C:\PS> ./PowerTheHash.ps1 -WDigest -Cachelogons -RestrictedAdmin
